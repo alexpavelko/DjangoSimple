@@ -1,0 +1,15 @@
+{% include "navigation.html" %}
+
+{% block content %}
+  <h1>{{ teacher.first_name }} {{ teacher.last_name }}</h1>
+  <p>Email: {{ teacher.email }}</p>
+  <p>Должность: {{ teacher.job_position }}</p>
+  {% if teacher_subjects %}
+    <h2>Предметы, которые ведет:</h2>
+  <ul>
+    {% for subject in teacher.subjects.all %}
+      <li>{{ subject.title }} ({{ subject.get_course_display }} курс)</li>
+    {% endfor %}
+  </ul>
+    {% endif %}
+{% endblock %}

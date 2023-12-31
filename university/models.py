@@ -17,7 +17,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=20, verbose_name="Имя")
     last_name = models.CharField(max_length=20, verbose_name="Фамилия")
     ticket_number = models.CharField(max_length=15, verbose_name="№ студенческого билета")
-    email = models.EmailField(max_length=30, unique=True, verbose_name="Email студента")
+    email = models.EmailField(max_length=30, verbose_name="Email студента")
     COURSE_CHOICES = [
         (1, '1'),
         (2, '2'),
@@ -32,7 +32,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     first_name = models.CharField(max_length=20, verbose_name="Имя")
     last_name = models.CharField(max_length=20, verbose_name="Фамилия")
-    email = models.EmailField(max_length=30, unique=True, verbose_name="Email студента")
+    email = models.EmailField(max_length=30, verbose_name="Email учителя")
     JOB_POSITION_CHOICES = [
         ("Ассистент", "Ассистент"),
         ("Старший преподователь", "Старший преподователь"),
