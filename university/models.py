@@ -39,7 +39,7 @@ class Teacher(models.Model):
         ("Доцент", "Доцент"),
         ("Профессор", "Профессор"),
     ]
-    job_position = models.CharField(choices=JOB_POSITION_CHOICES, verbose_name="Должность")
+    job_position = models.CharField(max_length=40, choices=JOB_POSITION_CHOICES, verbose_name="Должность")
 
 
 class Subject(models.Model):
