@@ -1,0 +1,51 @@
+{% include "navigation.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Группы</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+
+<h1>Группы</h1>
+<table border="1px solid black">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>Название</th>
+        <th>Курс</th>
+        <th colspan="2" style="text-align: center">Возможные действия</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for group in groups %}
+        <tr>
+            <td>{{ group.id }}</td>
+            <td><a href="/group/{{ group.id }}">{{ group.title }}</a></td>
+            <td>{{ group.course }}</td>
+            <td>
+                <form action="/group/{{ group.id }}/edit">
+                    <button class="btn btn-primary">Редактировать</button>
+                </form>
+            </td>
+            <td>
+                <form action="/group/{{ group.id }}/delete">
+                    <button class="btn btn-danger">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+<form action="/group/add" style="margin-top: 50px; margin-left: 10px">
+    <button type="submit" class="btn-primary btn-submit">Добавить группу</button>
+</form>
+</body>
+</html>
