@@ -7,8 +7,8 @@
   {% if teacher_subjects %}
     <h2>Предметы, которые ведет:</h2>
   <ul>
-    {% for subject in teacher.subjects.all %}
-      <li>{{ subject.title }} ({{ subject.get_course_display }} курс)</li>
+    {% for subject in teacher_subjects %}
+      <li>{{ subject.title }} {{ subject.get_course_display }}</li>
     {% endfor %}
   </ul>
     {% endif %}

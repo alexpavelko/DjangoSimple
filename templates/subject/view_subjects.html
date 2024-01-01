@@ -1,0 +1,54 @@
+{% include "navigation.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Предметы</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+
+<h1>Предметы</h1>
+<table border="1px solid black">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>Название</th>
+        <th>Преподаватель</th>
+        <th>Должность преподавателя</th>
+        <th colspan="2" style="text-align: center">Возможные действия</th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    {% for subject in subjects %}
+        <tr>
+            <td>{{ subject.id }}</td>
+            <td><a href="/subject/{{ subject.id }}">{{ subject.title }} </a></td>
+            <td><a href="/teacher/{{ subject.teacher.id }}">{{ subject.teacher.first_name }} {{ subject.teacher.last_name }}</a></td>
+            <td>{{ subject.teacher.job_position }}</td>
+            <td>
+                <form action="/subject/{{ subject.id }}/edit">
+                    <button class="btn btn-primary">Редактировать</button>
+                </form>
+            </td>
+            <td>
+                <form action="/subject/{{ subject.id }}/delete">
+                    <button class="btn btn-danger">Удалить</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+<form action="/subject/add" style="margin-top: 50px; margin-left: 10px">
+    <button type="submit" class="btn-primary btn-submit">Добавить предмет</button>
+</form>
+</body>
+</html>

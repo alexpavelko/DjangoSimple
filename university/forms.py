@@ -16,3 +16,16 @@ class TeacherForm(forms.ModelForm):
             'email': forms.TextInput(attrs={'class': 'form-input', 'style': 'width: 400px;'}),
             'job_position': forms.Select(attrs={'class': 'form-select', 'style': 'width: 400px;'}, choices=Teacher.JOB_POSITION_CHOICES),
         }
+
+
+class SubjectForm(forms.ModelForm):
+    def init(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Subject
+        fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-input', 'style': 'width: 600px;'}),
+            'teacher': forms.Select(attrs={'class': 'form-select', 'style': 'width: 600px;'}, choices=Teacher.JOB_POSITION_CHOICES),
+        }
