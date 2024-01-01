@@ -1,16 +1,13 @@
 {% include "navigation.html" %}
-{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Преподаватели</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-
 </head>
-<body>
 
+<body>
 <h1>Преподаватели</h1>
 <table border="1px solid black">
     <thead>
@@ -22,14 +19,11 @@
     </tr>
     </thead>
     <tbody>
-
-
     {% for teacher in teachers %}
         <tr>
             <td>{{ teacher.id }}</td>
             <td><a href="/teacher/{{ teacher.id }}">{{ teacher.first_name }} {{ teacher.last_name }}</a></td>
             <td>{{ teacher.job_position }}</td>
-
             <td>
                 <form action="/teacher/{{ teacher.id }}/edit">
                     <button class="btn btn-primary">Редактировать</button>
@@ -49,5 +43,6 @@
 <form action="/teacher/add" style="margin-top: 50px; margin-left: 10px">
     <button type="submit" class="btn-primary btn-submit">Добавить преподавателя</button>
 </form>
+
 </body>
 </html>

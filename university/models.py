@@ -4,7 +4,7 @@ from university.constants import COURSE_CHOICES, GRADE_CHOICES, JOB_POSITION_CHO
 
 
 class Group(models.Model):
-    title = models.CharField(max_length=10, verbose_name="Группа")
+    title = models.CharField(max_length=10, verbose_name="Название группы")
     course = models.IntegerField(choices=COURSE_CHOICES, verbose_name="Курс обучения")
 
     class Meta:
@@ -55,11 +55,18 @@ class Subject(models.Model):
         verbose_name_plural = "Предметы"
 
     def __str__(self):
-        return f'{self.title}, Преподаватель: {self.teacher}'
+        return f'{self.title}, преподаватель: {self.teacher}'
 
 
 class Grade(models.Model):
     student = models.ForeignKey(to=Student, on_delete=models.CASCADE, verbose_name="Студент")
     subject = models.ForeignKey(to=Subject, on_delete=models.CASCADE, verbose_name="Предмет")
-    grade = models.PositiveIntegerField(choices=GRADE_CHOICES)
+    grade = models.PositiveIntegerField(choices=GRADE_CHOICES, verbose_name="Оценка")
     graduating_date = models.DateField(verbose_name="Дата выставления оценки")
+
+    class Meta:
+        verbose_name = "Оценка"
+        verbose_name_plural = "Оценки"
+
+    def __str__(self):
+        return f'{self.grade}'

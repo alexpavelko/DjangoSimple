@@ -1,15 +1,24 @@
 {% include "navigation.html" %}
 
-{% block content %}
-  <h1>{{ teacher.first_name }} {{ teacher.last_name }}</h1>
-  <p>Email: {{ teacher.email }}</p>
-  <p>Должность: {{ teacher.job_position }}</p>
-  {% if teacher_subjects %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Преподаватель {{ teacher.first_name }} {{ teacher.last_name }}</title>
+</head>
+
+<body>
+<h1>{{ teacher.first_name }} {{ teacher.last_name }}</h1>
+<p>Email: {{ teacher.email }}</p>
+<p>Должность: {{ teacher.job_position }}</p>
+{% if teacher_subjects %}
     <h2>Предметы, которые ведет:</h2>
-  <ul>
-    {% for subject in teacher_subjects %}
-      <li>{{ subject.title }} {{ subject.get_course_display }}</li>
-    {% endfor %}
-  </ul>
-    {% endif %}
-{% endblock %}
+    <ul>
+        {% for subject in teacher_subjects %}
+            <li>{{ subject.title }}, {{ subject.group.course }} курс, группа {{ subject.group.title }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+</body>
+</html>

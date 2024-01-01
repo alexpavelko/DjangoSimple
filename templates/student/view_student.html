@@ -1,11 +1,61 @@
 {% include "navigation.html" %}
 
-  <h1>{{ student.first_name }} {{ student.last_name }}</h1>
-  <p>Группа: {{ student.group.title }}</p>
-  <p>Курс: {{ student.group.course }}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Студент {{ student }}</title>
+</head>
+
+<body>
+<h1>{{ student.first_name }} {{ student.last_name }}</h1>
+<p>Группа: {{ student.group.title }}</p>
+<p>Курс: {{ student.group.course }}</p>
+<p>Email: {{ student.email }}</p>
+<p>№ студенческого билета: {{ student.ticket_number }}</p>
+
 {% if student.group.subjects.count > 0 %}
-  <p>Предметы, которые изучает студент:</p>
+    <p>Предметы, которые изучает студент:</p>
     {% for subject in student.group.subjects.all %}
-    {{ forloop.counter }}. {{ subject }}<br>
+        {{ forloop.counter }}. {{ subject }}<br>
     {% endfor %}
 {% endif %}
+
+{% if student.group.subjects.count > 0 %}
+    <table border="1px solid black">
+        <thead>
+        <tr>
+            <th>Предмет</th>
+            <th>Оценка за предмет</th>
+            <th>Дата выставления оценки</th>
+            <th colspan="2">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for grade in student_grades %}
+            <tr>
+                <td>{{ grade.subject.title }}</td>
+                <td>{{ grade.grade }}</td>
+                <td>{{ grade.graduating_date }}</td>
+                <td>
+                    <form action="/grade/{{ grade.id }}/edit">
+                        <button class="btn btn-primary">Редактировать</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/grade/{{ grade.id }}/delete">
+                        <button class="btn btn-danger">Удалить</button>
+                    </form>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endif %}
+
+<form action="/grade/{{ student.id }}/add" style="margin-top: 50px; margin-left: 10px">
+    <button type="submit" class="btn-primary btn-submit">Добавить оценку</button>
+</form>
+
+</body>
+</html>

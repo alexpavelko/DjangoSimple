@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import render, redirect
 
 from university.forms import *
@@ -238,6 +240,7 @@ def view_student(request, student_id):
     student = Student.objects.get(id=student_id)
     context = {
         'student': student,
+        'student_grades': Grade.objects.filter(student=student),
     }
     return render(request, "student/view_student.html", context)
 
@@ -267,6 +270,57 @@ def delete_student(request, student_id):
     Student.objects.get(id=student_id).delete()
     return redirect(request.META.get('HTTP_REFERER'))
 
+
+# endregion
+
+
+# region grade
+
+
+def add_student_grade(request, student_id):
+    student = Student.objects.get(id=student_id)
+    grade_form = GradeForm(student=student,initial={
+        'student': student,
+    })
+    if request.method == 'POST':
+        grade_form = GradeForm(request.POST)
+    if grade_form.is_valid():
+        grade = grade_form.save(commit=False)
+        grade.graduating_date = date.today()
+        grade.save()
+        return redirect(f'/student/{student_id}')
+    context = {
+        'title': 'Поставить оценку',
+        'confirm_button': 'Поставить',
+        'form': grade_form,
+    }
+    return render(request, "form.html", context)
+
+
+def edit_student_grade(request, grade_id):
+    grade = Grade.objects.get(id=grade_id)
+    student = Student.objects.get(id=grade.student.id)
+    grade_form = GradeForm(student=student, instance=grade)
+    if request.method == 'POST':
+        grade_form = GradeForm(request.POST)
+        if grade_form.is_valid():
+            grade.student = grade_form.cleaned_data['student']
+            grade.subject = grade_form.cleaned_data['subject']
+            grade.grade = grade_form.cleaned_data['grade']
+            grade.graduating_date = date.today()
+            grade.save()
+            return redirect(f'/student/{grade.student.id}')
+    context = {
+        'title': 'Редактировать оценку',
+        'confirm_button': 'Редактировать',
+        'form': grade_form,
+    }
+    return render(request, "form.html", context)
+
+
+def delete_student_grade(request, grade_id):
+    Grade.objects.get(id=grade_id).delete()
+    return redirect(request.META.get('HTTP_REFERER'))
 
 # endregion
 

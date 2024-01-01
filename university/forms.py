@@ -19,7 +19,7 @@ class TeacherForm(forms.ModelForm):
 
 
 class SubjectForm(forms.ModelForm):
-    def init(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     class Meta:
@@ -27,7 +27,7 @@ class SubjectForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input', 'style': 'width: 600px;'}),
-            'teacher': forms.Select(attrs={'class': 'form-select', 'style': 'width: 600px;'}, choices=JOB_POSITION_CHOICES),
+            'teacher': forms.Select(attrs={'class': 'form-select', }, choices=JOB_POSITION_CHOICES),
             'group': forms.Select(attrs={'class': 'form-select', 'style': 'width: 600px;'}, choices=Group.objects.all),
         }
 
@@ -46,7 +46,7 @@ class GroupForm(forms.ModelForm):
 
 
 class StudentForm(forms.ModelForm):
-    def init(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     class Meta:
@@ -60,3 +60,21 @@ class StudentForm(forms.ModelForm):
             'group': forms.Select(attrs={'class': 'form-input', 'style': 'width: 300px;'}, choices=Group.objects.all),
         }
 
+
+class GradeForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        student = kwargs.pop('student', None)
+        super().__init__(*args, **kwargs)
+
+        if student:
+            self.fields['subject'].queryset = student.group.subjects
+
+    class Meta:
+        model = Grade
+        fields = '__all__'
+        exclude = ('graduating_date', )
+        widgets = {
+            'grade': forms.Select(attrs={'class': 'form-input', 'style': 'width: 100px;'}, choices=GRADE_CHOICES),
+            'subject': forms.Select(attrs={'class': 'form-input', }),
+            'student': forms.Select(attrs={'class': 'form-input', 'style': 'width: 300px;'}),
+        }

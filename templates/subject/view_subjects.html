@@ -1,13 +1,10 @@
 {% include "navigation.html" %}
-{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Предметы</title>
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-
 </head>
 <body>
 
@@ -23,13 +20,13 @@
     </tr>
     </thead>
     <tbody>
-
-
     {% for subject in subjects %}
         <tr>
             <td>{{ subject.id }}</td>
             <td><a href="/subject/{{ subject.id }}">{{ subject.title }} </a></td>
-            <td><a href="/teacher/{{ subject.teacher.id }}">{{ subject.teacher.first_name }} {{ subject.teacher.last_name }}</a></td>
+            <td>
+                <a href="/teacher/{{ subject.teacher.id }}">{{ subject.teacher.first_name }} {{ subject.teacher.last_name }}</a>
+            </td>
             <td>{{ subject.teacher.job_position }}</td>
             <td>
                 <form action="/subject/{{ subject.id }}/edit">
@@ -50,5 +47,6 @@
 <form action="/subject/add" style="margin-top: 50px; margin-left: 10px">
     <button type="submit" class="btn-primary btn-submit">Добавить предмет</button>
 </form>
+
 </body>
 </html>

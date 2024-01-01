@@ -1,11 +1,21 @@
 {% include "navigation.html" %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Группа {{ group.title }}</title>
+</head>
+
+<body>
   <h1>{{ group.title }}</h1>
   <p>Курс: {{ group.course }}</p>
 
 {% if group.subjects %}
-  <p>Предметы, которые изучает студент:</p>
+  <p>Предметы, которые изучают студенты группы {{ group.title }}:</p>
     {% for subject in group.subjects.all %}
     {{ forloop.counter }}. {{ subject }}<br>
     {% endfor %}
 {% endif %}
+</body>
+</html>
