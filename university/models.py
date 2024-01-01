@@ -50,6 +50,13 @@ class Subject(models.Model):
     teacher = models.ForeignKey(to=Teacher, on_delete=models.CASCADE,
                                 verbose_name="Преподаватель, который ведет предмет")
 
+    class Meta:
+        verbose_name = "Предмет"
+        verbose_name_plural = "Предметы"
+
+    def __str__(self):
+        return f'{self.title}, Преподаватель: {self.teacher}'
+
 
 class Grade(models.Model):
     student = models.ForeignKey(to=Student, on_delete=models.CASCADE, verbose_name="Студент")

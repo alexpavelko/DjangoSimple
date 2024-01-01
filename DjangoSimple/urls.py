@@ -20,4 +20,10 @@ urlpatterns = [
     path('group/<int:group_id>/', view_group, name='view_group'),
     path('group/<int:group_id>/edit', edit_group, name='edit_group'),
     path('group/<int:group_id>/delete', delete_group, name='delete_group'),
+
+    path('students/', get_students, name='get_students'),
+    path('student/add', add_student, name='add_student'),
+    path('student/<int:student_id>/', view_student, name='view_student'),
+    path('student/<int:student_id>/edit', edit_student, name='edit_student'),
+    path('student/<int:student_id>/delete', delete_student, name='delete_student'),
 ]

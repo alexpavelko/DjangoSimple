@@ -205,3 +205,68 @@ def delete_group(request, group_id):
 
 # endregion
 
+# region student
+
+
+def get_students(request):
+    students = Student.objects.all()
+    context = {
+        'students': students,
+    }
+
+    return render(request, "student/view_students.html", context)
+
+
+def add_student(request):
+    student_form = StudentForm()
+    if request.method == 'POST':
+        student_form = StudentForm(request.POST)
+    if student_form.is_valid():
+        student = student_form.save()
+        student.save()
+        return redirect(f'/student/{student.id}')
+    context = {
+        'title': 'Добавить студента',
+        'confirm_button': 'Добавить',
+        'form': student_form,
+    }
+
+    return render(request, "form.html", context)
+
+
+def view_student(request, student_id):
+    student = Student.objects.get(id=student_id)
+    context = {
+        'student': student,
+    }
+    return render(request, "student/view_student.html", context)
+
+
+def edit_student(request, student_id):
+    student = Student.objects.get(id=student_id)
+    student_form = StudentForm(instance=student)
+    if request.method == 'POST':
+        student_form = StudentForm(request.POST)
+        if student_form.is_valid():
+            student.first_name = student_form.cleaned_data['first_name']
+            student.last_name = student_form.cleaned_data['last_name']
+            student.ticket_number = student_form.cleaned_data['ticket_number']
+            student.email = student_form.cleaned_data['email']
+            student.group = student_form.cleaned_data['group']
+            student.save()
+            return redirect(f'/student/{student_id}')
+    context = {
+        'title': 'Редактировать студента',
+        'confirm_button': 'Редактировать',
+        'form': student_form,
+    }
+    return render(request, "form.html", context)
+
+
+def delete_student(request, student_id):
+    Student.objects.get(id=student_id).delete()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+
+# endregion
+

@@ -44,3 +44,19 @@ class GroupForm(forms.ModelForm):
             'course': forms.Select(attrs={'class': 'form-input', 'style': 'width: 100px;'}, choices=COURSE_CHOICES),
         }
 
+
+class StudentForm(forms.ModelForm):
+    def init(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = Student
+        fields = '__all__'
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-input', 'style': 'width: 400px;'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-input', 'style': 'width: 400px;'}),
+            'email': forms.TextInput(attrs={'class': 'form-input', 'style': 'width: 400px;'}),
+            'ticket_number': forms.TextInput(attrs={'class': 'form-input', 'style': 'width: 400px;'}),
+            'group': forms.Select(attrs={'class': 'form-input', 'style': 'width: 300px;'}, choices=Group.objects.all),
+        }
+

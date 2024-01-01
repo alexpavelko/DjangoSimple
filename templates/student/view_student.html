@@ -1,0 +1,11 @@
+{% include "navigation.html" %}
+
+  <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+  <p>Группа: {{ student.group.title }}</p>
+  <p>Курс: {{ student.group.course }}</p>
+{% if student.group.subjects.count > 0 %}
+  <p>Предметы, которые изучает студент:</p>
+    {% for subject in student.group.subjects.all %}
+    {{ forloop.counter }}. {{ subject }}<br>
+    {% endfor %}
+{% endif %}
